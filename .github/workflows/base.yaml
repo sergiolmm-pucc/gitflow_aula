@@ -34,8 +34,8 @@ jobs:
           echo "${{ github.ref }}"
           echo "${{ github.event.inputs.environment }}"
           if [ -n "${{ github.event.inputs.environment }}" ]; then
-            echo "env_name=${{ github.event.inputs.environment }}" >> $GITHUB_OUTPUT
-          elif [ "${{ github.ref }}" = "refs/heads/stable" ]; then
+            echo "env_name=${{ github.event.inputs.environment }}" >> $GITHUB_OUTPUT             
+          elif [ "${{ github.ref }}" = "refs/heads/develop" ]; then
             echo "env_name=stable" >> $GITHUB_OUTPUT
           elif [ "${{ github.ref }}" = "refs/heads/prod" ]; then
             echo "env_name=prod" >> $GITHUB_OUTPUT
