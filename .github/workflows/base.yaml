@@ -32,7 +32,7 @@ jobs:
         id: branch_check
         run: |
           echo "${{ github.ref }}"
-          echio "${{ github.event.inputs.environment }}"
+          echo "${{ github.event.inputs.environment }}"
           if [ -n "${{ github.event.inputs.environment }}" ]; then
             echo "env_name=${{ github.event.inputs.environment }}" >> $GITHUB_OUTPUT
           elif [ "${{ github.ref }}" = "refs/heads/stable" ]; then
