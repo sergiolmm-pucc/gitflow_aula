@@ -1,0 +1,51 @@
+name: Deploy branch
+
+on:
+  push:
+    branches: [main, develop, prod]
+  
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Environment
+        type: choice
+        required: true
+        default: dev
+        options:
+          - dev
+          - prod
+          - stage
+
+env:
+  SERVERLESS_VERSION: 3.38.0-d09dc659
+
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read  # This is required for actions/checkout
+
+jobs:
+  set-environment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set environment from branch or input
+        id: branch_check
+        run: |
+          echo "${{ github.ref }}"
+          echo "${{ github.event.inputs.environment }}"
+          if [ -n "${{ github.event.inputs.environment }}" ]; then
+            echo "env_name=${{ github.event.inputs.environment }}" >> $GITHUB_OUTPUT             
+          elif [ "${{ github.ref }}" = "refs/heads/develop" ]; then
+            echo "env_name=stable" >> $GITHUB_OUTPUT
+          elif [ "${{ github.ref }}" = "refs/heads/prod" ]; then
+            echo "env_name=prod" >> $GITHUB_OUTPUT
+          elif [ "${{ github.ref }}" = "refs/heads/main" ]; then
+            echo "env_name=dev" >> $GITHUB_OUTPUT
+          else
+            echo "Error: Invalid branch"
+            exit 1
+          fi
+          echo "${{ steps.branch_check.outputs.env_name }}"
+    outputs:
+      env_name: ${{ steps.branch_check.outputs.env_name }}
+  

@@ -1,0 +1,10 @@
+var a
+var b
+funcao retorna a + b
+
+funcao de testa aqui
+
+criação da feature soma
+
+realese 0.1.0
+
