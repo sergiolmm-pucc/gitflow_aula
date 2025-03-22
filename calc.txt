@@ -3,3 +3,6 @@ var b
 funcao retorna a + b
 
 funcao de testa aqui
+
+criação da feature soma
+
