@@ -8,3 +8,5 @@ criação da feature soma
 
 realese 0.1.0
 
+release 0.1.1
+
